@@ -1,9 +1,30 @@
 import { Hono } from 'hono';
 import { Bindings } from './bindings';
 
+import { prettyJSON } from 'hono/pretty-json';
 const app = new Hono<{ Bindings: Bindings }>();
 
 app.notFound(async (c) => c.json({ erorr: 'not found' }, 404));
+app.use('*', prettyJSON());
+
+app.onError(async (error, c) => {
+	console.error(error);
+	return c.json({ error: error }, 500);
+});
+
+app.use('*', async (c, next) => {
+	// ignore check match
+	// ignore /lists/id/* and /file/*/*
+	if (c.req.path.startsWith('/list/id/') || c.req.path.startsWith('/file/')) {
+		return next();
+	}
+	// check header
+	const key = c.req.header('X-Api-Key');
+	if (key !== c.env.X_API_KEY) {
+		return c.json({ error: 'Unauthorized' }, 401);
+	}
+	return next();
+});
 
 app.get('/list', async (c) => {
 	const result = await c.env.BUCKET.list();
@@ -51,10 +72,10 @@ app.get('/list/:id', async (c) => {
 			return c.json({ error: 'id is required' }, 400);
 		}
 		const bucket = c.env.BUCKET;
-		bucket.list({
+		const result = await bucket.list({
 			prefix: id,
+			limit: 100,
 		});
-		const result = await bucket.list({});
 		return c.json({ result });
 	} catch (error) {
 		return c.json({ error: error }, 500);

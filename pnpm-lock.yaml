@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@honojs/validator':
+    specifier: ^0.1.2
+    version: 0.1.2
   hono:
     specifier: ^3.3.4
     version: 3.3.4
@@ -293,6 +296,16 @@ packages:
     dev: true
     optional: true
 
+  /@honojs/validator@0.1.2:
+    resolution: {integrity: sha512-FG0PGRmP5QvOy3HxkaJZHMdQT87eMcOuorqcxrj9EIVgIdvCFNfY8t/lCqgScOXh9aGbV5axtdIEAybQ6OrvqA==}
+    engines: {node: '>=11.0.0'}
+    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+    dependencies:
+      hono: 2.7.8
+      jsonpath-plus: 7.2.0
+      validator: 13.11.0
+    dev: false
+
   /acorn-walk@8.2.0:
     resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
     engines: {node: '>=0.4.0'}
@@ -544,6 +557,11 @@ packages:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
     dev: true
 
+  /hono@2.7.8:
+    resolution: {integrity: sha512-LXLXw6LilE16QO0siFBDiNzmaRP6ca5ZyF0gDWcaiUqJJtE/d4lV/Hpst2O33AmJB5n0DQa5w53gZLUVf7uXNg==}
+    engines: {node: '>=16.0.0'}
+    dev: false
+
   /hono@3.3.4:
     resolution: {integrity: sha512-lqvcsQrXS0bSydj/MkOXi3opAwrlauIjZefhXMMRj9prABfBWdrYHSrWk/xfxgxNPs4yuEMh2Z5zV0L2b1Jmdw==}
     engines: {node: '>=16.0.0'}
@@ -588,6 +606,11 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
     dev: true
+
+  /jsonpath-plus@7.2.0:
+    resolution: {integrity: sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /kleur@4.1.5:
     resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
@@ -918,6 +941,11 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
     dev: true
+
+  /validator@13.11.0:
+    resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}
+    engines: {node: '>= 0.10'}
+    dev: false
 
   /workerd@1.20230724.0:
     resolution: {integrity: sha512-++D7JqS4/dk7zvtGpk+i/7G9bZtEl6lTtgAsIoSSGR1qJAxxEu21ktm9+FH0EYh7uKfizuM5H9lrTsR+3u44PA==}
