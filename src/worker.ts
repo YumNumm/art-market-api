@@ -2,10 +2,18 @@ import { Hono } from 'hono';
 import { Bindings } from './bindings';
 
 import { prettyJSON } from 'hono/pretty-json';
+import { cors } from 'hono/cors';
+import { isValidUUIDv4 } from './utils/is-valid-uuid';
 const app = new Hono<{ Bindings: Bindings }>();
 
 app.notFound(async (c) => c.json({ erorr: 'not found' }, 404));
 app.use('*', prettyJSON());
+app.use(
+	'*',
+	cors({
+		origin: ['http://localhost:3000', 'https://tekken.work'],
+	})
+);
 
 app.onError(async (error, c) => {
 	console.error(error);
@@ -15,7 +23,7 @@ app.onError(async (error, c) => {
 app.use('*', async (c, next) => {
 	// ignore check match
 	// ignore /lists/id/* and /file/*/*
-	if (c.req.path.startsWith('/list/id/') || c.req.path.startsWith('/file/')) {
+	if ((c.req.path.includes('/list/') && !c.req.path.endsWith('/list/')) || c.req.path.includes('/file/')) {
 		return next();
 	}
 	// check header
@@ -71,41 +79,18 @@ app.get('/list/:id', async (c) => {
 		if (id === undefined) {
 			return c.json({ error: 'id is required' }, 400);
 		}
+		const isValidId = (id: string) => {
+			return isValidUUIDv4(id);
+		};
+		if (!isValidId(id)) {
+			return c.json({ error: 'id is invalid' }, 400);
+		}
 		const bucket = c.env.BUCKET;
 		const result = await bucket.list({
 			prefix: id,
 			limit: 100,
 		});
 		return c.json({ result });
-	} catch (error) {
-		return c.json({ error: error }, 500);
-	}
-});
-
-// get file
-app.get('/file/:id/:name', async (c) => {
-	try {
-		const id = c.req.param('id');
-		const name = c.req.param('name');
-		if (id === undefined) {
-			return c.json({ error: 'id is required' }, 400);
-		}
-		if (name === undefined) {
-			return c.json({ error: 'name is required' }, 400);
-		}
-		const bucket = c.env.BUCKET;
-		const fileName = `${id}/${name}`;
-		const object = await bucket.get(fileName);
-		if (object === null) {
-			return c.json({ error: 'file not found' }, 404);
-		}
-		const headers = new Headers();
-		object.writeHttpMetadata(headers);
-		headers.set('etag', object.etag);
-
-		return new Response(object.body, {
-			headers: headers,
-		});
 	} catch (error) {
 		return c.json({ error: error }, 500);
 	}
