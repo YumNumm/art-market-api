@@ -23,9 +23,9 @@ app.onError(async (error, c) => {
 app.use('*', async (c, next) => {
 	// ignore check match
 	// ignore /lists/id/* and /file/*/*
-	if ((c.req.path.includes('/list/') && !c.req.path.endsWith('/list/')) || c.req.path.includes('/file/')) {
+	//if ((c.req.path.includes('/list/') && !c.req.path.endsWith('/list/')) || c.req.path.includes('/file/')) {
 		return next();
-	}
+	//}
 	// check header
 	const key = c.req.header('X-Api-Key');
 	if (key !== c.env.X_API_KEY) {
