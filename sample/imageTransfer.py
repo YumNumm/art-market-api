@@ -8,6 +8,7 @@ import requests
 
 class ImageTransfer:
     __base_url: str = "https://art-market-api.yumnumm.workers.dev"
+    __object_url: str = "https://objects.tekken.work"
     __x_api_key: str = "YOUR_API_KEY"
 
     def upload_image(userName: str, filePath: str) -> dict:
@@ -39,7 +40,7 @@ class ImageTransfer:
         :param fileName: ファイル名
         :rtype: None
         """
-        url = "https://objects.tekken.work/" + userName + "/" + fileName
+        url = ImageTransfer.__object_url + userName + "/" + fileName
         response = requests.get(url, headers=headers)
         with open(fileName, "wb") as f:
             f.write(response.content)
@@ -52,7 +53,6 @@ class ImageTransfer:
         [{"userName": string, "fileName": string, "createdAt": string}]
         """
         url = ImageTransfer.__base_url + "/list/" + userName
-        headers = {"X-Api-Key": ImageTransfer.__x_api_key}
         response = requests.get(url, headers=headers)
         result = response.json()
         return list(
