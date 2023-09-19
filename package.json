@@ -7,12 +7,12 @@
     "start": "wrangler dev"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230724.0",
-    "typescript": "^5.1.6",
-    "wrangler": "^3.4.0"
+    "@cloudflare/workers-types": "^4.20230914.0",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.8.0"
   },
   "dependencies": {
     "@honojs/validator": "^0.1.2",
-    "hono": "^3.3.4"
+    "hono": "^3.6.3"
   }
 }
